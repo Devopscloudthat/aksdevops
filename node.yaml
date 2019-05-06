@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-front
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: node-front
+  template:
+    metadata:
+      labels:
+        app: node-front
+    spec:
+      containers:
+      - name: node-front
+        image: __ACR__/aksdevops-node:#{Build.BuildId}#
+        ports:
+        - containerPort: 80
+        env:
+          - name: PODENV
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+      imagePullSecrets:
+      - name: acrsecret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-front
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: node-front
