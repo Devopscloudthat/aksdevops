@@ -5,4 +5,4 @@ COPY package*.json ./
 RUN npm install
 COPY src /nodeapp
 EXPOSE 80
-CMD [ "node", "index.js" ]
+CMD [ "node", "app.js" ]
