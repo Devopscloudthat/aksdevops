@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: node-front
-        image: __ACR__/aksdevops-node:#{Build.BuildId}#
+        image: #{ACR}#/aksdevops:#{Build.BuildId}#
         ports:
         - containerPort: 80
         env:
